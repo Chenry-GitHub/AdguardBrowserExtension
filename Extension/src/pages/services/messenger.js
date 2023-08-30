@@ -204,7 +204,7 @@ class Messenger {
             ? MessageType.EnableFiltersGroup
             : MessageType.DisableFiltersGroup;
         const groupId = id - 0;
-        await this.sendMessage(type, { groupId });
+        return this.sendMessage(type, { groupId });
     }
 
     async updateFilterStatus(filterId, data) {

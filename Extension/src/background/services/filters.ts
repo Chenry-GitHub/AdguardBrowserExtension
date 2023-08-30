@@ -22,6 +22,7 @@ import {
     EnableFiltersGroupMessage,
     MessageType,
 } from '../../common/messages';
+import { Log } from '../../common/log';
 import { SettingOption } from '../schema';
 import { messageHandler } from '../message-handler';
 import { Engine } from '../engine';
@@ -95,16 +96,37 @@ export class FiltersService {
     }
 
     /**
-     * Called at the request to enable group of filters.
+     * Enables group on {@link EnableFiltersGroupMessage} message via {@link FiltersService.enableGroup}.
      *
-     * @param message Message of {@link EnableFiltersGroupMessage} with group
-     * id to enable.
+     * If group is activated first time, provides list of recommended filters.
+     * NOTE: we do not await of async task execution and returns array of recommended filters optimistic.
+     * TODO (v.zhelvis): handle enabling of recommended filters on frontend instead using this handler,
+     * because this is UI edge case.
+     *
+     * @param message {@link EnableFiltersGroupMessage} With specified group id.
+     *
+     * @returns Array of recommended filters on first group activation.
      */
-    private static async onGroupEnable(message: EnableFiltersGroupMessage): Promise<void> {
+    private static onGroupEnable(message: EnableFiltersGroupMessage): number[] | undefined {
         const { groupId } = message.data;
 
-        await Categories.enableGroup(groupId);
-        Engine.debounceUpdate();
+        const group = Categories.getGroupState(groupId);
+
+        if (!group) {
+            Log.error(`Cannot find group with ${groupId} id`);
+            return;
+        }
+
+        if (group.touched) {
+            FiltersService.enableGroup(groupId);
+            return;
+        }
+
+        // If this is the first time the group has been activated - load and
+        // enable the recommended filters.
+        const recommendedFiltersIds = Categories.getRecommendedFilterIdsByGroupId(groupId);
+        FiltersService.enableGroup(groupId, recommendedFiltersIds);
+        return recommendedFiltersIds;
     }
 
     /**
@@ -163,5 +185,21 @@ export class FiltersService {
      */
     private static async resetBlockedAdsCount(): Promise<void> {
         await PageStatsApi.reset();
+    }
+
+    /**
+     * Enables specified group and updates filter engine.
+     *
+     * On first group activation we provide recommended filters,
+     * that will be loaded end enabled before update checking.
+     *
+     * @see Categories.enableGroup
+     *
+     * @param groupId Id of filter group.
+     * @param recommendedFiltersIds Array of filters ids to enable on first time the group has been activated.
+     */
+    private static async enableGroup(groupId: number, recommendedFiltersIds: number[] = []): Promise<void> {
+        await Categories.enableGroup(groupId, recommendedFiltersIds);
+        Engine.debounceUpdate();
     }
 }

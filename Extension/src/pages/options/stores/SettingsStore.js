@@ -303,7 +303,9 @@ class SettingsStore {
 
     @action
     async updateGroupSetting(id, enabled) {
-        await messenger.updateGroupStatus(id, enabled);
+        const recommendedFiltersIds = await messenger.updateGroupStatus(id, enabled);
+
+        // TODO: enable filters.
         runInAction(() => {
             const groupId = parseInt(id, 10);
             if (groupId === AntibannerGroupsId.OtherFiltersGroupId
@@ -328,6 +330,12 @@ class SettingsStore {
                     }
                 }
             });
+
+            if (Array.isArray(recommendedFiltersIds)) {
+                recommendedFiltersIds.forEach((id) => {
+                    this.setFilterEnabledState(id, true);
+                });
+            }
         });
     }
 
