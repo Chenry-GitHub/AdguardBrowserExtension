@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- TODO: update changelog before 4.2.x hotfix 2 -->
 <!-- changed: updated scriptlets to v1.9.72 -->
+<!-- changed: updated tswebextension to v0.3.15 -->
+<!-- fixed: Redirects are not included into tab's blocked requests count
+  [#2443](https://github.com/AdguardTeam/AdguardBrowserExtension/issues/2443) -->
+
 
 ## [Unreleased]
 

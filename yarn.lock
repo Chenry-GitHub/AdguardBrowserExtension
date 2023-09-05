@@ -47,10 +47,10 @@
     tldts "5.6.45"
     zod "3.19.1"
 
-"@adguard/tswebextension@^0.3.13":
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/@adguard/tswebextension/-/tswebextension-0.3.13.tgz#f0a2b45772ca2ff37a7167430be9ec5fd0129428"
-  integrity sha512-TXRtyjp7hhTjbdWQDoq0GH472wzG+0tYSLQOGR8sMGCWZI6uuFto2OSlgqiEbZ6tmamT6MeiwYPUSAajfUalVw==
+"@adguard/tswebextension@^0.3.15":
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/@adguard/tswebextension/-/tswebextension-0.3.15.tgz#aa1127c6256f49c0c9c8303e5f9b9ceca6fa0c0f"
+  integrity sha512-xFNYGbSM5NGS4l9SaelDzOJMXld8Rq8t0gdIjLsMFTO+5B3Qe+HssR85Mpn76Isubn/MGVH0AgJ9/HykucK8RA==
   dependencies:
     "@adguard/assistant" "^4.3.70"
     "@adguard/extended-css" "^2.0.52"
