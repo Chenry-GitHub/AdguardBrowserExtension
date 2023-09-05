@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Slow enabling of recommended filters on first group activation
+
+
+## [4.2.161] - 2023-08-28
+
 ### Changed
 - Update `@adguard/tsurlfitler` to [v2.1.10](https://github.com/AdguardTeam/tsurlfilter/blob/master/packages/tsurlfilter/CHANGELOG.md#2110---2023-08-21)
 - Update `@adguard/tswebextension` to [v0.3.11](https://github.com/AdguardTeam/tsurlfilter/blob/master/packages/tswebextension/CHANGELOG.md#0311---2023-08-21)
@@ -14,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Do not inject content scripts to the chrome web store pages on extension initialization
+
 
 ## [4.2.151] - 2023-08-11
 
